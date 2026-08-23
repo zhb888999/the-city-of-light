@@ -1,0 +1,29 @@
+<!-- 文件路径：templates/base.html -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>光明城市自动化</title>
+</head>
+<body>
+    <form action="/config" method="post">
+        <label for="refresh_time">刷新时间:</label>
+        <input type="number" step="0.1" id="refresh_time" name="refresh_time" value="{{ refresh_time }}" required>
+        <br>
+        <label for="adb_ip">adb IP:</label>
+        <input type="text" id="adb_ip" name="adb_ip" value="{{ adb_ip }}" required>
+        <label for="adb_port">adb 端口:</label>
+        <input type="number" id="adb_port" name="adb_port" value="{{ adb_port }}" required>
+        <br>
+
+        网络adb连接<input type="checkbox" name="network_adb" {% if network_adb %} checked {% endif %}> <br>
+        只获取宝箱<input type="checkbox" name="only_treasure_chest" {% if only_treasure_chest %} checked {% endif %}> <br>
+        跳过油漆桶<input type="checkbox" name="jump_paint" {% if jump_paint %} checked {% endif %}> <br>
+        跳过钉板<input type="checkbox" name="jump_nail_board" {% if jump_nail_board %} checked {% endif %}> <br>
+        关闭服务<input type="checkbox" name="close_service" {% if close_service %} checked {% endif %}> <br>
+       
+        <input type="submit" value="提交"> 
+        </form>
+</body>
+</html>

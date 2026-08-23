@@ -1,0 +1,9 @@
+shapely
+pyclipper
+numpy
+onnxruntime-gpu
+opencv-python
+fastapi
+pydantic
+uvicorn
+python-multipart
