@@ -90,6 +90,7 @@ def select_next_order(msgs, device):
             break
     print(f"接受下一个订单")
     device.input_tap(*get_next_center(accept_center))
+    time.sleep(0.5)
     device.input_tap(*accept_center)
 
 def refuse_order(msgs, device):
@@ -105,13 +106,13 @@ def refuse_order(msgs, device):
     refuse_center = get_refuse_center(accept_center)
     next_center = get_next_center(accept_center)
     device.input_tap(*refuse_center)
-    time.sleep(0.3)
+    time.sleep(0.5)
     device.input_tap(*next_center)
-    time.sleep(0.3)
+    time.sleep(0.5)
     device.input_tap(*refuse_center)
-    time.sleep(0.3)
+    time.sleep(0.5)
     device.input_tap(*next_center)
-    time.sleep(0.3)
+    time.sleep(0.5)
     device.input_tap(*refuse_center)
 
 def select_current_order(msgs, device):
@@ -292,7 +293,7 @@ def service():
                         select_current_order(msgs, device)
                 elif order_type == YOUQI:
                     if config["only_treasure_chest"]:
-                        refuse_order(msgs)
+                        refuse_order(msgs, device)
                     elif config["jump_paint"]:
                         select_next_order(msgs, device)
                     else:

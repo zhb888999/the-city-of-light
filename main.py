@@ -745,22 +745,32 @@ async def index(request: Request):
 async def set_config(
     refresh_time: float = Form(...), 
     adb_ip: str = Form(...),
-    adb_port: int = Form(int),
+    adb_port: int = Form(...),
     network_adb: List[str] = Form(default=[]),
     only_treasure_chest: List[str] = Form(default=[]),
     jump_nail_board: List[str] = Form(default=[]),
     jump_paint: List[str] = Form(default=[]),
-    close_service: List[str] = Form(default=[])):
-    global config
-    async with lock:
-        config["adb_ip"] = adb_ip
-        config["adb_port"] = adb_port
-        config["network_adb"] = len(network_adb) > 0
-        config["only_treasure_chest"] = len(only_treasure_chest) > 0
-        config["jump_paint"] = len(jump_paint) > 0
-        config["jump_nail_board"] = len(jump_nail_board) > 0
-        config["close_service"] = len(close_service) > 0
-    return RedirectResponse(url="/", status_code=303) 
+    close_service: List[str] = Form(default=[])
+):
+    try:
+        global config
+        async with lock:
+            config["refresh_time"] = refresh_time
+            config["adb_ip"] = adb_ip
+            config["adb_port"] = adb_port
+            config["network_adb"] = len(network_adb) > 0
+            config["only_treasure_chest"] = len(only_treasure_chest) > 0
+            config["jump_paint"] = len(jump_paint) > 0
+            config["jump_nail_board"] = len(jump_nail_board) > 0
+            config["close_service"] = len(close_service) > 0
+        
+        # 成功则跳转到带 success=1 的页面
+        return RedirectResponse(url="/?success=1", status_code=303)
+        
+    except Exception as e:
+        # 捕获异常，跳转到带 error=1 的页面
+        print(f"配置保存失败: {e}")
+        return RedirectResponse(url="/?error=1", status_code=303)
 
 @app.post('/model/ocr')
 async def ocr_server(msg: Msg):
